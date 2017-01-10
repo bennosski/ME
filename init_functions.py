@@ -13,19 +13,30 @@ tau3 = array([[1.0,0.0],[0.0,-1.0]])
 
 def Ek(kx, ky):
     return -2.0*0.25*(cos(kx) + cos(ky))
-    
-def init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi):
+
+def init_Sigma(Nk,Nw,superconductivity):
+    Sigma = zeros([Nk,Nk,Nw,2,2], dtype=complex)
+
+
+    return Sigma
+
+def init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity):
     G = zeros([Nk,Nk,Nw,2,2], dtype=complex)
-    
+
+    if superconductivity:
+        S0 = asarray([[0., 0.01], [0.01, 0.]])
+    else:
+        S0 = zeros([2,2])
+        
     for ik1 in range(Nk):
         for ik2 in range(Nk):
-            kx, ky = kxs[ik1], kys[ik2]            
             
             for n in range(Nw): 
                 iwn = iw_fermi[n]
+
+                G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - S0)
                 
-                G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[kx,ky]*tau3)
-            
+                
     return G 
     
 def init_D(Nw, beta, omega, iw_bose):
@@ -59,7 +70,7 @@ def init_momenta(Nk):
     return kxs, kys
 
 def init_gofq(kxs, kys, Nk, g, q0):
-    gofq = zeros([Nk,Nk])
+    gofq = zeros([Nk,Nk],dtype=complex)
     for ik1 in range(Nk):
         for ik2 in range(Nk):
             kx, ky = kxs[ik1], kys[ik2] 
