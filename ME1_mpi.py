@@ -24,15 +24,15 @@ tstart = time.time()
 
 Nk = 81
 Nw = 200
-beta = 80.0
-g = sqrt(0.12)
-omega = 0.2
-#q0 = 123456789.
-q0 = 0.2
+beta = 2.4
+g = 3.0
+omega = 4.0
+q0 = 12345678.9
+#q0 = 0.2
 superconductivity = True
 
 if myrank==0:
-    save("data/params.txt",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
+    save("data/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
     
 iter_selfconsistency = 15
 
