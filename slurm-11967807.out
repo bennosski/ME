@@ -1,0 +1,85 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^start: Tue Jan 10 15:43:32 PST 2017
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+  File "ME1_mpi.py", line 98
+    print "change ", change
+                  ^
+SyntaxError: invalid syntax
+srun: error: sh-25-20: tasks 16-19: Exited with exit code 1
+srun: error: sh-25-19: tasks 0-15: Exited with exit code 1
+^^^^^^^end: Tue Jan 10 15:43:37 PST 2017

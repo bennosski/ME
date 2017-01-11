@@ -1,0 +1,388 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^start: Tue Jan 10 18:33:13 PST 2017
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+ME1_mpi.py:12: RuntimeWarning: compiletime version 2.6 of module 'mpi4py.MPI' does not match runtime version 2.7
+  from mpi4py import MPI
+slurmstepd: error: *** JOB 11977996 ON sh-10-22 CANCELLED AT 2017-01-10T18:43:49 DUE TO TIME LIMIT ***
+slurmstepd: error: *** STEP 11977996.0 ON sh-10-22 CANCELLED AT 2017-01-10T18:43:49 DUE TO TIME LIMIT ***

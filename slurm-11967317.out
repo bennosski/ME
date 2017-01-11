@@ -1,0 +1,85 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^start: Tue Jan 10 15:36:52 PST 2017
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+Traceback (most recent call last):
+  File "ME1_mpi.py", line 12, in <module>
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+ImportError: No module named mpi4py
+  File "ME1_mpi.py", line 12, in <module>
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+    from mpi4py import MPI
+ImportError: No module named mpi4py
+srun: error: sh-10-35: tasks 16-19: Exited with exit code 1
+srun: error: sh-10-33: tasks 0-15: Exited with exit code 1
+^^^^^^^end: Tue Jan 10 15:36:55 PST 2017

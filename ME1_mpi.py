@@ -22,17 +22,17 @@ myrank = comm.rank
 
 tstart = time.time()
 
-Nk = 11
+Nk = 81
 Nw = 200
 beta = 80.0
 g = sqrt(0.12)
 omega = 0.2
-q0 = 123456789.
+#q0 = 123456789.
+q0 = 0.2
 superconductivity = True
 
 if myrank==0:
     save("data/params.txt",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
-
     
 iter_selfconsistency = 15
 
@@ -46,12 +46,11 @@ D         = init_D(Nw, beta, omega, iw_bose)
 Sigma     = zeros([Nk,Nk,Nw,2,2],dtype=complex)
 
 
-
-
 #now do the same calculation but with the FFT
 G         = init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity)
+#G         = load("data/G.npy")
 Conv      = zeros([Nk,Nk,Nw,2,2], dtype=complex)
-Sigma     = zeros([Nk,Nk,Nw,2,2],dtype=complex)
+Sigma     = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 
 fft_gofq2 = fft.fft2(gofq**2)
 
@@ -79,31 +78,32 @@ for myiter in range(iter_selfconsistency):
                 Conv[:,:,n,:,:] = roll(Conv[:,:,n,:,:], -(Nk-1)/2, axis=1)
 
                 Sigma_proc[:,:,n,:,:] -= Conv[:,:,n,:,:]
-                    
-                
+                                    
     comm.Allreduce(Sigma_proc, Sigma, op=MPI.SUM)
     
     change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))
                   
     #compute new G
     for ik1 in range(Nk):
-        kx = kxs[ik1]
         for ik2 in range(Nk):
-            ky = kys[ik2]
             
             for n in range(Nw):
                 iwn = iw_fermi[n]
                 
-                G[ik1,ik2,n,:,:] = linalg.inv((iwn*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:]))
+                G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
 
     if myrank==0:
         print "change ", change
         print "iteration time ",time.time() - tstart
 
+        save("data/G.npy", G[:,:,:,:,:])
+        save("data/Sigma.npy", Sigma[:,:,:,:,:])    
+
         
+print "total run time ", time.time() - tstart
 if myrank==0:
-    print "total run time ", time.time() - tstart
     equaltime = sum(G, axis=2)
     save("data/Geqfft.npy", equaltime)
     save("data/G.npy", G[:,:,:,:,:])
     save("data/Sigma.npy", Sigma[:,:,:,:,:])
+        
