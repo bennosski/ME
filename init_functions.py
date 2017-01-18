@@ -12,7 +12,9 @@ tau1 = array([[0.0,1.0],[1.0,0.0]])
 tau3 = array([[1.0,0.0],[0.0,-1.0]])
 
 def Ek(kx, ky):
-    return -2.0*0.25*(cos(kx) + cos(ky))
+    #return 0.0
+    return -2.0*1.0*(cos(kx) + cos(ky))
+
 
 def init_Sigma(Nk,Nw,superconductivity):
     Sigma = zeros([Nk,Nk,Nw,2,2], dtype=complex)
@@ -35,10 +37,19 @@ def init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity):
                 iwn = iw_fermi[n]
 
                 G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - S0)
-                
-                
+                                
     return G 
+
+def init_ws(N_split_omega, omega, iter_selfconsistency, band, Nk):
+    wmin = omega*int(band[(Nk-1)/2,(Nk-1)/2]/omega) - (iter_selfconsistency+1)*omega
+    wmax = -wmin
+
+    Nr = (wmax-wmin)/omega*N_split_omega+1
+    Nr = int(Nr)
     
+    return linspace(wmin,wmax,Nr), Nr
+
+
 def init_D(Nw, beta, omega, iw_bose):
     D = zeros(Nw-1, dtype=complex)    
     for n in range(Nw-1):
@@ -83,6 +94,10 @@ def init_band(kxs, kys, Nk):
         for ik2 in range(Nk):
             band[ik1,ik2] = Ek(kxs[ik1], kys[ik2])
     return band
+
+def init_nF(ws, omega):
+    return
+
 
 def progress_bar(i, imax):
     bar = '\rprogress : |'

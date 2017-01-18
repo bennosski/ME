@@ -22,34 +22,57 @@ myrank = comm.rank
 
 tstart = time.time()
 
-Nk    = 41
-Nw    = 200
-beta  = 2.4
-g     = 0.4
-omega = 0.8
-q0 = 12345678.9
-#q0 = 0.2
-superconductivity = True
+[Nk,Nw,beta,g,omega,q0,superconductivity] = load("data/params.npy")
 
-if myrank==0:
-    save("data/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
-    
-iter_selfconsistency = 15
+Nr = 101    #num real frequencies
+
+print "      Nk : ",Nk
+print "      Nw : ",Nw
+print "    beta : ",beta
+print "       g : ",g
+print "   omega : ",omega
+print "      q0 : ",q0
+print "      sc : ",superconductivity
+print "      Nr : ",Nr
+
+
+iter_selfconsistency = 3
 
 kxs, kys  = init_momenta(Nk)
 gofq      = init_gofq(kxs, kys, Nk, g, q0)
 iw_bose   = init_boson_freq(Nw, beta)
 iw_fermi  = init_fermion_freq(Nw, beta)
 band      = init_band(kxs, kys, Nk)
-G         = init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity)
-D         = init_D(Nw, beta, omega, iw_bose)
-Sigma     = zeros([Nk,Nk,Nw,2,2],dtype=complex)
+ws        = linspace(band[(Nk-1)/2,(Nk-1)/2]-(iter_selfconsistency+1)*omega 
 
+######
+# compute the first term of Marsiglio using output of imaginary axis ME
+######
+
+G = load("data/G.npy")
+                     
+Term1     = zeros([Nk,Nk,Nr,2,2],dtype=complex)
+Term1_proc = zeros([Nk,Nk,Nw,2,2], dtype=complex)
+for m in range(myrank,Nw,nprocs): 
+    fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,m,:,:],tau3), axes=(0,1))
+
+    for iw in range(Nr): 
+        Conv[:,:,iw,:,:] = 1.0/(Nk**2)/beta * computeD(ws[iw]-iw_fermi[m]) * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
+                
+        Conv[:,:,iw,:,:] = roll(Conv[:,:,iw,:,:], -(Nk-1)/2, axis=0)
+        Conv[:,:,iw,:,:] = roll(Conv[:,:,iw,:,:], -(Nk-1)/2, axis=1)
+
+        Term1_proc[:,:,iw,:,:] -= Conv[:,:,iw,:,:]
+            
+comm.Allreduce(Term1_proc, Term1, op=MPI.SUM)
+
+
+                     
 
 #now do the same calculation but with the FFT
 G         = init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity)
 #G         = load("data/G.npy")
-Conv      = zeros([Nk,Nk,2,2], dtype=complex)
+Conv      = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 Sigma     = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 
 fft_gofq2 = fft.fft2(gofq**2)
@@ -72,11 +95,12 @@ for myiter in range(iter_selfconsistency):
                             
             if(n_m>=0 and n_m<Nw-1):
 
-                Conv = 1.0/(Nk**2)/beta * D[n_m] * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
-                Conv = roll(Conv, -(Nk-1)/2, axis=0)
-                Conv = roll(Conv, -(Nk-1)/2, axis=1)
+                Conv[:,:,n,:,:] = 1.0/(Nk**2)/beta * D[n_m] * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
+                
+                Conv[:,:,n,:,:] = roll(Conv[:,:,n,:,:], -(Nk-1)/2, axis=0)
+                Conv[:,:,n,:,:] = roll(Conv[:,:,n,:,:], -(Nk-1)/2, axis=1)
 
-                Sigma_proc[:,:,n,:,:] -= Conv
+                Sigma_proc[:,:,n,:,:] -= Conv[:,:,n,:,:]
                                     
     comm.Allreduce(Sigma_proc, Sigma, op=MPI.SUM)
     
@@ -95,13 +119,14 @@ for myiter in range(iter_selfconsistency):
         print "change ", change
         print "iteration time ",time.time() - tstart
 
-        save("data/G.npy", G)
-        save("data/Sigma.npy", Sigma)    
+        save("data/G.npy", G[:,:,:,:,:])
+        save("data/Sigma.npy", Sigma[:,:,:,:,:])    
 
         
 print "total run time ", time.time() - tstart
 if myrank==0:
     equaltime = sum(G, axis=2)
-    save("data/G.npy", G)
-    save("data/Sigma.npy", Sigma)
+    save("data/Geqfft.npy", equaltime)
+    save("data/G.npy", G[:,:,:,:,:])
+    save("data/Sigma.npy", Sigma[:,:,:,:,:])
         

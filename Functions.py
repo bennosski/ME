@@ -6,6 +6,9 @@ Created on Thu Dec 08 22:38:24 2016
 """
 from numpy import *
 
+def computeD(w, omega):
+    return 2.*omega/(w**2 - omega**2)
+
 #computes k - q
 def subtract_momenta(ik1,ik2,iq1,iq2,Nk):
     Nk2 = int(Nk/2.)
