@@ -13,6 +13,10 @@ tau3 = array([[1.0,0.0],[0.0,-1.0]])
 
 def Ek(kx, ky):
     #return 0.0
+    
+    #bandstructure for FeSe monolayer band
+    #return -2.0*1.0*(cos(kx) + cos(ky)) - (-3.4)
+
     return -2.0*1.0*(cos(kx) + cos(ky))
 
 
@@ -22,6 +26,7 @@ def init_Sigma(Nk,Nw,superconductivity):
 
     return Sigma
 
+'''
 def init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity):
     G = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 
@@ -39,10 +44,12 @@ def init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity):
                 G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - S0)
                                 
     return G 
+'''
 
 def init_ws(N_split_omega, omega, iter_selfconsistency, band, Nk):
-    wmin = omega*int(band[(Nk-1)/2,(Nk-1)/2]/omega) - (iter_selfconsistency+1)*omega
-    wmax = -wmin
+    #wmin = omega*int(band[(Nk-1)/2,(Nk-1)/2]/omega) - (iter_selfconsistency+1)*omega
+    wmin = -5*omega
+    wmax = omega
 
     Nr = (wmax-wmin)/omega*N_split_omega+1
     Nr = int(Nr)

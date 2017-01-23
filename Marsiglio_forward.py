@@ -23,12 +23,11 @@ import time
 
 tstart = time.time()
 
-[Nk,Nw,beta,g,omega,q0,superconductivity] = load("data/params.npy")
+[Nk,Nw,beta,g,omega,q0,superconductivity] = load("data_forward/params.npy")
 Nk = int(Nk)
-Nk = 81
 Nw = int(Nw)
 
-N_split_omega = 8
+N_split_omega = 30
 
 iter_selfconsistency = 5
 
@@ -45,7 +44,7 @@ print "g  ",g
 print "omega ",omega
 print "beta ",beta
 
-omeg = N_split_omega
+omeg      = N_split_omega
 
 gofq      = init_gofq(kxs, kys, Nk, g, q0)
 fft_gofq2 = fft.fft2(gofq**2)
@@ -53,7 +52,7 @@ fft_gofq2 = fft.fft2(gofq**2)
 save("data_Marsiglio_forward/params",asarray([Nk,Nw,beta,g,omega,0.0,superconductivity,Nr]))
 save("data_Marsiglio_forward/ws",    ws)
 
-G = load("data/G.npy")
+G = load("data_forward/G.npy")
 Term1 = zeros([Nk,Nk,Nr,2,2],dtype=complex)
 Conv = zeros([Nk,Nk,2,2], dtype=complex)
 
@@ -68,13 +67,15 @@ for m in range(Nw):
         
         Term1[:,:,ir,:,:] -= Conv
 
+save("data_Marsiglio_forward/Term1", Term1)
+1./0.
 print " "
 print "Done computing Term1"
 print " "
 
 G = zeros([Nk,Nk,Nr,2,2], dtype=complex)
-fft_G = zeros([Nk,Nk,Nr,2,2], dtype=complex)
 Term2 = zeros([Nk,Nk,Nr,2,2], dtype=complex)
+#one = ones([Nk,Nk,Nr,2,2])
 Sigma = Term1 + Term2
 
 nB = 1./(exp(beta*omega) - 1.0)
@@ -85,44 +86,37 @@ for ir in range(Nr):
 for myiter in range(iter_selfconsistency):
 
     print " "
-    print myiter
+    print "iteration ",myiter
     
     #compute new G
     for ik1 in range(Nk):
         for ik2 in range(Nk):
-            for n in range(Nr):
-                
-                G[ik1,ik2,n,:,:] = linalg.inv((ws[n]-0.0001*1j)*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
-
-    print "G computed"
-                
-    #compute fft_G
-    for n in range(Nr):
-        fft_G[:,:,n,:,:] = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,n,:,:],tau3), axes=(0,1))
-
-    print "fft_G computed"
+            for n in range(Nr):                
+                G[ik1,ik2,n,:,:] = linalg.inv((ws[n]-0.01*1j)*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
         
     Sigma_old = Sigma.copy()
     
-    Term2 = zeros([Nr,2,2], dtype=complex)
+    Term2 = zeros([Nk,Nk,Nr,2,2], dtype=complex)
     for ir in range(Nr):
+        fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,ir,:,:],tau3), axes=(0,1))
 
         Conv = fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
         if ir+omeg<Nr:
-            Term2[ir+omeg,:,:] += (nB+1.-nF[ir]) * 1./Nk**2 * Conv
+            Term2[:,:,ir+omeg,:,:] += (nB+1.-nF[ir]) * 1./Nk**2 * Conv
         if ir-omeg>=0:
-            Term2[ir-omeg,:,:] += (nB+nF[ir]) * 1./Nk**2 * Conv
+            Term2[:,:,ir-omeg,:,:] += (nB+nF[ir]) * 1./Nk**2 * Conv
             
                         
     Sigma = Term1 + Term2
 
     change = zeros([2,2], dtype=complex)    
-    change += sum(abs(Sigma-Sigma_old), axis=0)
+    change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))
 
     print "change ",change
     print "time elapsed ",time.time() - tstart
+    print "filling : ",sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2*(ws[-1]-ws[0])/Nr
     
-    save("data_Marsiglio_forward/Gloc.npy", Gloc)
+    save("data_Marsiglio_forward/G.npy", G)
     save("data_Marsiglio_forward/Sigma.npy", Sigma)    
     
                         
