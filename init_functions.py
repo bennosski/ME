@@ -49,7 +49,7 @@ def init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity):
 def init_ws(N_split_omega, omega, iter_selfconsistency, band, Nk):
     #wmin = omega*int(band[(Nk-1)/2,(Nk-1)/2]/omega) - (iter_selfconsistency+1)*omega
     wmin = -5*omega
-    wmax = omega
+    wmax = 5*omega
 
     Nr = (wmax-wmin)/omega*N_split_omega+1
     Nr = int(Nr)

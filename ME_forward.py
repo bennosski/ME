@@ -25,8 +25,8 @@ Nw    = 200
 beta  = 4.8
 g     = 0.5
 omega = 1.2
-q0 = 12345678.9
-#q0 = 0.2
+#q0 = 12345678.9
+q0 = 0.2
 superconductivity = True
 
 save("data_forward/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))

@@ -21,13 +21,15 @@ import time
 ###form a group under addition!
 ###Choose Nw to be even (number of Fermionic frequencies)
 
+load_term1 = True
+
 tstart = time.time()
 
 [Nk,Nw,beta,g,omega,q0,superconductivity] = load("data_forward/params.npy")
 Nk = int(Nk)
 Nw = int(Nw)
 
-N_split_omega = 30
+N_split_omega = 15
 
 iter_selfconsistency = 5
 
@@ -52,26 +54,33 @@ fft_gofq2 = fft.fft2(gofq**2)
 save("data_Marsiglio_forward/params",asarray([Nk,Nw,beta,g,omega,0.0,superconductivity,Nr]))
 save("data_Marsiglio_forward/ws",    ws)
 
-G = load("data_forward/G.npy")
-Term1 = zeros([Nk,Nk,Nr,2,2],dtype=complex)
-Conv = zeros([Nk,Nk,2,2], dtype=complex)
 
-##### check sign of Term1. Different than formula in JJ paper (absorbed into D?) #####
-for m in range(Nw):
-    fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,m,:,:],tau3), axes=(0,1))
+if load_term1:
+    Term1 = load("data_Marsiglio_forward/Term1.npy")
+else:
+    G = load("data_forward/G.npy")
+    Term1 = zeros([Nk,Nk,Nr,2,2],dtype=complex)
+    Conv = zeros([Nk,Nk,2,2], dtype=complex)
 
-    for ir in range(Nr):
-        Conv = 1./(Nk**2 * beta) * computeD(ws[ir]-iw_fermi[m], omega) * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
-        Conv = roll(Conv, -(Nk-1)/2, axis=0)
-        Conv = roll(Conv, -(Nk-1)/2, axis=1)
-        
-        Term1[:,:,ir,:,:] -= Conv
+    ##### check sign of Term1. Different than formula in JJ paper (absorbed into D?) #####
+    for m in range(Nw):
+        fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,m,:,:],tau3), axes=(0,1))
 
-save("data_Marsiglio_forward/Term1", Term1)
-1./0.
-print " "
-print "Done computing Term1"
-print " "
+        for ir in range(Nr):
+            #Conv = 1./(Nk**2 * beta) * computeD(ws[ir]-iw_fermi[m], omega) * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
+            
+            Conv = 1./(Nk**2 * beta) * 2.*omega/((ws[ir]-iw_fermi[m])*(ws[ir]-iw_fermi[m]) - omega*omega) * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
+            
+            Conv = roll(Conv, -(Nk-1)/2, axis=0)
+            Conv = roll(Conv, -(Nk-1)/2, axis=1)
+            
+            Term1[:,:,ir,:,:] -= Conv
+
+    save("data_Marsiglio_forward/Term1", Term1)
+
+    print " "
+    print "Done computing Term1"
+    print " "
 
 G = zeros([Nk,Nk,Nr,2,2], dtype=complex)
 Term2 = zeros([Nk,Nk,Nr,2,2], dtype=complex)
@@ -92,7 +101,7 @@ for myiter in range(iter_selfconsistency):
     for ik1 in range(Nk):
         for ik2 in range(Nk):
             for n in range(Nr):                
-                G[ik1,ik2,n,:,:] = linalg.inv((ws[n]-0.01*1j)*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
+                G[ik1,ik2,n,:,:] = linalg.inv((ws[n]+0.2*1j)*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
         
     Sigma_old = Sigma.copy()
     
@@ -101,6 +110,9 @@ for myiter in range(iter_selfconsistency):
         fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,ir,:,:],tau3), axes=(0,1))
 
         Conv = fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
+        Conv = roll(Conv, -(Nk-1)/2, axis=0)
+        Conv = roll(Conv, -(Nk-1)/2, axis=1)
+
         if ir+omeg<Nr:
             Term2[:,:,ir+omeg,:,:] += (nB+1.-nF[ir]) * 1./Nk**2 * Conv
         if ir-omeg>=0:
