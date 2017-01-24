@@ -21,7 +21,7 @@ import time
 ###form a group under addition!
 ###Choose Nw to be even (number of Fermionic frequencies)
 
-load_term1 = True
+load_term1 = False
 
 tstart = time.time()
 
