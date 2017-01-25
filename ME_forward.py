@@ -20,13 +20,13 @@ import subprocess
 
 tstart = time.time()
 
-Nk    = 41
+Nk    = 81
 Nw    = 200
-beta  = 4.8
-g     = 1.0
+beta  = 5.6
+g     = 16.0
 omega = 1.2
-q0 = 12345678.9
-#q0 = 0.2
+#q0 = 12345678.9
+q0 = 0.2
 superconductivity = True
 
 save("data_forward/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
@@ -93,9 +93,9 @@ for myiter in range(iter_selfconsistency):
     print "iteration ",myiter
     print "change ", change
     print "iteration time ",time.time() - tstart
-    print "filling : ", sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
+    print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
     
-    save("data_forward/G.npy", G)
+    save("data_forward/GM.npy", G)
     save("data_forward/Sigma.npy", Sigma)    
 
         

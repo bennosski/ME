@@ -58,7 +58,8 @@ save("data_Marsiglio_forward/ws",    ws)
 if load_term1:
     Term1 = load("data_Marsiglio_forward/Term1.npy")
 else:
-    G = load("data_forward/G.npy")
+    G = load("data_forward/GM.npy")
+    save("data_Marsiglio_foward/GM.npy", G)
     Term1 = zeros([Nk,Nk,Nr,2,2],dtype=complex)
     Conv = zeros([Nk,Nk,2,2], dtype=complex)
 
@@ -66,9 +67,7 @@ else:
     for m in range(Nw):
         fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,m,:,:],tau3), axes=(0,1))
 
-        for ir in range(Nr):
-            #Conv = 1./(Nk**2 * beta) * computeD(ws[ir]-iw_fermi[m], omega) * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
-            
+        for ir in range(Nr):            
             Conv = 1./(Nk**2 * beta) * 2.*omega/((ws[ir]-iw_fermi[m])*(ws[ir]-iw_fermi[m]) - omega*omega) * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
             
             Conv = roll(Conv, -(Nk-1)/2, axis=0)
@@ -101,7 +100,7 @@ for myiter in range(iter_selfconsistency):
     for ik1 in range(Nk):
         for ik2 in range(Nk):
             for n in range(Nr):                
-                G[ik1,ik2,n,:,:] = linalg.inv((ws[n]+0.2*1j)*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
+                G[ik1,ik2,n,:,:] = linalg.inv((ws[n]+0.1*1j)*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
         
     Sigma_old = Sigma.copy()
     
