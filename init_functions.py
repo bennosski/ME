@@ -15,9 +15,9 @@ def Ek(kx, ky):
     #return 0.0
     
     #bandstructure for FeSe monolayer band
-    return -2.0*1.0*(cos(kx) + cos(ky)) - (-3.6)
+    #return -2.0*1.0*(cos(kx) + cos(ky)) - (-3.6)
 
-    #return -2.0*1.0*(cos(kx) + cos(ky))
+    return -2.0*1.0*(cos(kx) + cos(ky))
 
 
 def init_Sigma(Nk,Nw,superconductivity):

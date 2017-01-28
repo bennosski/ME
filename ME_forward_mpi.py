@@ -11,6 +11,11 @@ from Functions import *
 import time
 import subprocess
 
+from mpi4py import MPI
+
+comm = MPI.COMM_WORLD
+nprocs = comm.size
+myrank = comm.rank
 
 ###Nk must be odd or else the momentum points do not 
 ###form a group under addition!
@@ -24,13 +29,16 @@ import subprocess
 
 tstart = time.time()
 
+g_dqmc = 1.0
+
 Nk    = 41
 Nw    = 200
 beta  = 2.4
-g     = 5.29307723982
 omega = 1.2
-q0 = 12345678.9
-#q0 = 0.2
+#g     = 5.29307723982
+g = g_dqmc * Nk / sqrt(2. * omega)
+#q0 = 12345678.9
+q0 = 0.2
 superconductivity = False
 
 save("data_forward/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
@@ -79,7 +87,7 @@ for myiter in range(iter_selfconsistency):
     #compute new Sigma    
     change = zeros([2,2], dtype=complex)
 
-    for m in range(Nw): ### check this bound. it was n
+    for m in range(myrank,Nw,nprocs): ### check this bound. it was n
         fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,m,:,:],tau3), axes=(0,1))
 
         for n in range(Nw): 
@@ -93,20 +101,23 @@ for myiter in range(iter_selfconsistency):
 
                 Sigma_proc[:,:,n,:,:] -= Conv
                                     
-    Sigma = Sigma_proc
+    #Sigma = Sigma_proc
+    comm.Allreduce(Sigma_proc, Sigma, op=MPI.SUM)
     
     change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))
 
-    print " "
-    print "iteration ",myiter
-    print "change ", change
-    print "iteration time ",time.time() - tstart
-    print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
+    if myrank==0:
+        print " "
+        print "iteration ",myiter
+        print "change ", change
+        print "iteration time ",time.time() - tstart
+        print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
     
-    save("data_forward/GM.npy", G)
-    save("data_forward/Gloc.npy", sum(G, axis=(0,1))[:,0,0])
-    save("data_forward/Sigma.npy", Sigma)    
+        save("data_forward/GM.npy", G)
+        save("data_forward/Gloc.npy", sum(G, axis=(0,1))[:,0,0])
+        save("data_forward/Sigma.npy", Sigma)    
 
         
-print "total run time ", time.time() - tstart
+if myrank==0:
+    print "total run time ", time.time() - tstart
         
