@@ -24,28 +24,29 @@ myrank = comm.rank
 #correcting for chemical potential shift!
 
 
-# g_ME = g_dqmc * sqrt(N_total_ME) / sqrt(2 omega)
+# g_ME = g_dqmc * sqrt(N_total_DQMC) / sqrt(2 omega)
 
 
 tstart = time.time()
 
-g_dqmc = 1.0
+g_dqmc = 0.225
 
-Nk    = 41
-Nw    = 200
+Nk    = 80
+Nw    = 800
 beta  = 2.4
 omega = 1.2
-#g     = 5.29307723982
-g = g_dqmc * Nk / sqrt(2. * omega)
-#q0 = 12345678.9
-q0 = 0.2
+
+g = g_dqmc * 8 / sqrt(2. * omega)
+
+q0 = 12345678.9
+#q0 = 0.2
 superconductivity = False
 
 save("data_forward/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
 
 #assert 1==0
 
-iter_selfconsistency = 8
+iter_selfconsistency = 30
 
 kxs, kys  = init_momenta(Nk)
 gofq      = init_gofq(kxs, kys, Nk, g, q0)
@@ -59,6 +60,7 @@ D         = init_D(Nw, beta, omega, iw_bose)
 #G         = load("data/G.npy")
 
 G         = zeros([Nk,Nk,Nw,2,2], dtype=complex)
+G_proc    = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 Conv      = zeros([Nk,Nk,2,2], dtype=complex)
 Sigma     = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 
@@ -68,18 +70,21 @@ change = ones([2,2], dtype=complex)
 
 #selfconsistency loop
 for myiter in range(iter_selfconsistency):
-    if abs(change[0,0]) < 1e-10:
+    if abs(change[0,0]) < 1e-8:
         break
     
     #compute new G
-    for ik1 in range(Nk):
+    for ik1 in range(myrank,Nk,nprocs):
         for ik2 in range(Nk):
             
             for n in range(Nw):
                 iwn = iw_fermi[n]
                 
-                G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
-    
+                G_proc[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
+
+    G = zeros([Nk,Nk,Nw,2,2], dtype=complex)
+    comm.Allreduce(G_proc, G, op=MPI.SUM)
+                
     Sigma_old = Sigma.copy()
     Sigma_proc = zeros([Nk,Nk,Nw,2,2], dtype=complex)
     Sigma = zeros([Nk,Nk,Nw,2,2], dtype=complex)
@@ -96,8 +101,8 @@ for myiter in range(iter_selfconsistency):
             if(n_m>=0 and n_m<Nw-1):
 
                 Conv = 1.0/(Nk**2)/beta * D[n_m] * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
-                Conv = roll(Conv, -(Nk-1)/2, axis=0)
-                Conv = roll(Conv, -(Nk-1)/2, axis=1)
+                Conv = roll(Conv, -Nk/2, axis=0)
+                Conv = roll(Conv, -Nk/2, axis=1)
 
                 Sigma_proc[:,:,n,:,:] -= Conv
                                     
@@ -120,4 +125,50 @@ for myiter in range(iter_selfconsistency):
         
 if myrank==0:
     print "total run time ", time.time() - tstart
-        
+
+    
+def plotME_k(folder_ME, k_index):
+    [Nk,Nw,beta,g,omega,q0,sc] = load(folder_ME+"params.npy")
+    taus = linspace(0, beta)
+
+    print Nk
+    print Nw
+    print beta
+    print g
+    print omega
+    
+    Nw = int(Nw)
+    Nk = int(Nk)
+    iw_fermi = zeros(Nw, dtype=complex)
+    Nw2 = int(Nw/2.)
+    for n in range(Nw):
+        iw_fermi[n] = 1j*(2.*(n - Nw2) + 1.)*pi/beta
+    ws = imag(iw_fermi)
+
+    Ntau = 50
+    taus = linspace(0.042,beta-0.042,Ntau)
+    
+    N_selected_k = len(k_index)
+    Gtau = zeros([Ntau, N_selected_k], dtype=complex)
+    G = load(folder_ME+"GM.npy")
+
+    print 'G shape ',shape(G)
+    
+    iky = Nk/2
+    ikxs = k_index
+
+    for ik in range(N_selected_k):
+        for itau in range(Ntau):
+            for iw in range(len(iw_fermi)):
+                Gtau[itau, ik] += 1./beta * exp(-1j*taus[itau]*imag(iw_fermi[iw])) * G[ikxs[ik],iky,iw,0,0]                
+                #plot(taus,-Gtau)
+
+    return taus,Gtau
+
+if myrank==0:
+    k_index = [0,10,20,30,40]
+    taus,Gtau = plotME_k("data_forward/", k_index)
+
+    print "saving new Gtau"
+    save("data_forward/taus.npy", taus)
+    save("data_forward/Gtau.npy", Gtau)

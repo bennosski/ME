@@ -26,25 +26,6 @@ def init_Sigma(Nk,Nw,superconductivity):
 
     return Sigma
 
-'''
-def init_G(Nk, Nw, beta, omega, band, kxs, kys, iw_fermi, superconductivity):
-    G = zeros([Nk,Nk,Nw,2,2], dtype=complex)
-
-    if superconductivity:
-        S0 = asarray([[0., 0.01], [0.01, 0.]])
-    else:
-        S0 = zeros([2,2])
-        
-    for ik1 in range(Nk):
-        for ik2 in range(Nk):
-            
-            for n in range(Nw): 
-                iwn = iw_fermi[n]
-
-                G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - S0)
-                                
-    return G 
-'''
 
 def init_ws(N_split_omega, omega, iter_selfconsistency, band, Nk):
     #wmin = omega*int(band[(Nk-1)/2,(Nk-1)/2]/omega) - (iter_selfconsistency+1)*omega
@@ -83,8 +64,8 @@ def init_momenta(Nk):
     kys = zeros(Nk)
     dk = 2.*pi/Nk
     for ik in range(Nk):
-        kxs[ik] = -pi + dk*ik + dk/2.
-        kys[ik] = -pi + dk*ik + dk/2.
+        kxs[ik] = -pi + dk*ik
+        kys[ik] = -pi + dk*ik
     return kxs, kys
 
 def init_gofq(kxs, kys, Nk, g, q0):

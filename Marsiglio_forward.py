@@ -70,8 +70,8 @@ else:
         for ir in range(Nr):            
             Conv = 1./(Nk**2 * beta) * 2.*omega/((ws[ir]-iw_fermi[m])*(ws[ir]-iw_fermi[m]) - omega*omega) * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
             
-            Conv = roll(Conv, -(Nk-1)/2, axis=0)
-            Conv = roll(Conv, -(Nk-1)/2, axis=1)
+            Conv = roll(Conv, -Nk/2, axis=0)
+            Conv = roll(Conv, -Nk/2, axis=1)
             
             Term1[:,:,ir,:,:] -= Conv
 
@@ -109,8 +109,8 @@ for myiter in range(iter_selfconsistency):
         fft_G = fft.fft2(einsum('ij,abjk,kl->abil',tau3,G[:,:,ir,:,:],tau3), axes=(0,1))
 
         Conv = fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
-        Conv = roll(Conv, -(Nk-1)/2, axis=0)
-        Conv = roll(Conv, -(Nk-1)/2, axis=1)
+        Conv = roll(Conv, -Nk/2, axis=0)
+        Conv = roll(Conv, -Nk/2, axis=1)
 
         if ir+omeg<Nr:
             Term2[:,:,ir+omeg,:,:] += (nB+1.-nF[ir]) * 1./Nk**2 * Conv

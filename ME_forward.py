@@ -24,7 +24,7 @@ import subprocess
 
 tstart = time.time()
 
-Nk    = 41
+Nk    = 40
 Nw    = 200
 beta  = 2.4
 g     = 5.29307723982
@@ -62,6 +62,8 @@ change = ones([2,2], dtype=complex)
 for myiter in range(iter_selfconsistency):
     if abs(change[0,0]) < 1e-10:
         break
+
+    s1 = time.time()
     
     #compute new G
     for ik1 in range(Nk):
@@ -71,7 +73,9 @@ for myiter in range(iter_selfconsistency):
                 iwn = iw_fermi[n]
                 
                 G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
-    
+
+    print "G time ",time.time()-s1
+                
     Sigma_old = Sigma.copy()
     Sigma_proc = zeros([Nk,Nk,Nw,2,2], dtype=complex)
     Sigma = zeros([Nk,Nk,Nw,2,2], dtype=complex)
@@ -88,8 +92,8 @@ for myiter in range(iter_selfconsistency):
             if(n_m>=0 and n_m<Nw-1):
 
                 Conv = 1.0/(Nk**2)/beta * D[n_m] * fft.ifft2( einsum('ij,ijab->ijab', fft_gofq2 , fft_G) , axes=(0,1))
-                Conv = roll(Conv, -(Nk-1)/2, axis=0)
-                Conv = roll(Conv, -(Nk-1)/2, axis=1)
+                Conv = roll(Conv, -Nk/2, axis=0)
+                Conv = roll(Conv, -Nk/2, axis=1)
 
                 Sigma_proc[:,:,n,:,:] -= Conv
                                     
@@ -104,7 +108,8 @@ for myiter in range(iter_selfconsistency):
     print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
     
     save("data_forward/GM.npy", G)
-    save("data_forward/Gloc.npy", sum(G, axis=(0,1))[:,0,0])
+    Gloc =  sum(G, axis=(0,1))[:,0,0]
+    save("data_forward/Gloc.npy", Gloc)
     save("data_forward/Sigma.npy", Sigma)    
 
         
