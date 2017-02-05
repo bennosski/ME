@@ -29,10 +29,10 @@ myrank = comm.rank
 
 tstart = time.time()
 
-g_dqmc = 0.225
+g_dqmc = 0.4
 
-Nk    = 80
-Nw    = 800
+Nk    = 40
+Nw    = 200
 beta  = 2.4
 omega = 1.2
 
@@ -67,6 +67,10 @@ Sigma     = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 fft_gofq2 = fft.fft2(gofq**2)
 
 change = ones([2,2], dtype=complex)
+
+if superconductivity:
+    Sigma[:,:,:,0,1] = 0.01*1j
+    Sigma[:,:,:,1,0] = 0.01*1j
 
 #selfconsistency loop
 for myiter in range(iter_selfconsistency):
@@ -109,7 +113,7 @@ for myiter in range(iter_selfconsistency):
     #Sigma = Sigma_proc
     comm.Allreduce(Sigma_proc, Sigma, op=MPI.SUM)
     
-    change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))
+    change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))/Nk**2
 
     if myrank==0:
         print " "
@@ -166,7 +170,13 @@ def plotME_k(folder_ME, k_index):
     return taus,Gtau
 
 if myrank==0:
-    k_index = [0,10,20,30,40]
+    #k_index = [0,10,20,30,40]
+
+    k_index = []
+    for i in range(5):
+        k_index.append(i*Nk/8)
+    print "k_index = ", k_index
+        
     taus,Gtau = plotME_k("data_forward/", k_index)
 
     print "saving new Gtau"
