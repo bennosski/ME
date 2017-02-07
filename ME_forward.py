@@ -5,12 +5,21 @@ Created on Thu Dec 08 01:44:04 2016
 @author: Ben
 """
 
+import subprocess
+def bash_command(cmd):
+    subprocess.Popen(['/bin/bash', '-c', cmd])
+
+bash_command('source mlpython2.7.5.sh')
+    
 from numpy import *
 from init_functions import *
 from Functions import *
 import time
 import subprocess
+import sys
 
+
+myrank=0
 
 ###Nk must be odd or else the momentum points do not 
 ###form a group under addition!
@@ -19,25 +28,52 @@ import subprocess
 #correcting for chemical potential shift!
 
 
-# g_ME = g_dqmc * sqrt(N_total_ME) / sqrt(2 omega)
+# g_ME = g_dqmc * sqrt(N_total_DQMC) / sqrt(2 omega)
 
+#bash_command('source setup.sh')
 
 tstart = time.time()
 
-Nk    = 40
-Nw    = 200
-beta  = 2.4
-g     = 5.29307723982
-omega = 1.2
-q0 = 12345678.9
-#q0 = 0.2
-superconductivity = False
+def parse_line(f):
+    line = f.readline()
+    index = line.index('#')
+    if '.' in line:
+        return float(line[:index])
+    else:
+        return int(float(line[:index]))
+    
+with open(sys.argv[1],'r') as f:
+    g_dqmc = parse_line(f)
+    Nk     = parse_line(f)
+    Nw     = parse_line(f)
+    beta   = parse_line(f)
+    omega  = parse_line(f)
+    superconductivity = parse_line(f)
+    q0     = parse_line(f)
+f.close()
 
-save("data_forward/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
+#savedir = sys.argv[2]
+import os
+savedir = 'data_2_6_17_small_cluster/q%1.1f'%q0+'_omega%1.1f'%omega+'_g%1.3f'%g_dqmc+'/'
+if not os.path.exists(savedir):
+    os.makedirs(savedir)
 
-#assert 1==0
+if myrank==0:
+    bash_command('cp '+sys.argv[1]+' '+savedir)
+    
+g     = g_dqmc * Nk * 1./ sqrt(2. * omega)
 
-iter_selfconsistency = 8
+print ' g_dqmc ',g_dqmc
+print ' Nk     ',Nk
+print ' Nw     ',Nw
+print ' beta   ',beta
+print ' omega  ',omega
+print ' superconductivty ',superconductivity
+print ' q0     ',q0
+
+q0    = 2*pi*q0
+
+iter_selfconsistency = 30
 
 kxs, kys  = init_momenta(Nk)
 gofq      = init_gofq(kxs, kys, Nk, g, q0)
@@ -51,6 +87,7 @@ D         = init_D(Nw, beta, omega, iw_bose)
 #G         = load("data/G.npy")
 
 G         = zeros([Nk,Nk,Nw,2,2], dtype=complex)
+G_proc    = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 Conv      = zeros([Nk,Nk,2,2], dtype=complex)
 Sigma     = zeros([Nk,Nk,Nw,2,2], dtype=complex)
 
@@ -58,12 +95,14 @@ fft_gofq2 = fft.fft2(gofq**2)
 
 change = ones([2,2], dtype=complex)
 
+if superconductivity:
+    Sigma[:,:,:,0,1] = 0.01*1j
+    Sigma[:,:,:,1,0] = 0.01*1j
+
 #selfconsistency loop
 for myiter in range(iter_selfconsistency):
-    if abs(change[0,0]) < 1e-10:
+    if abs(change[0,0]) < 1e-8:
         break
-
-    s1 = time.time()
     
     #compute new G
     for ik1 in range(Nk):
@@ -72,10 +111,13 @@ for myiter in range(iter_selfconsistency):
             for n in range(Nw):
                 iwn = iw_fermi[n]
                 
-                G[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
+                G_proc[ik1,ik2,n,:,:] = linalg.inv(iwn*tau0 - band[ik1,ik2]*tau3 - Sigma[ik1,ik2,n,:,:])
 
-    print "G time ",time.time()-s1
-                
+    G = zeros([Nk,Nk,Nw,2,2], dtype=complex)
+    G = G_proc
+    #comm.Allreduce(G_proc, G, op=MPI.SUM)
+
+    
     Sigma_old = Sigma.copy()
     Sigma_proc = zeros([Nk,Nk,Nw,2,2], dtype=complex)
     Sigma = zeros([Nk,Nk,Nw,2,2], dtype=complex)
@@ -98,20 +140,79 @@ for myiter in range(iter_selfconsistency):
                 Sigma_proc[:,:,n,:,:] -= Conv
                                     
     Sigma = Sigma_proc
+    #comm.Allreduce(Sigma_proc, Sigma, op=MPI.SUM)
     
-    change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))
+    change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))/Nk**2
 
-    print " "
-    print "iteration ",myiter
-    print "change ", change
-    print "iteration time ",time.time() - tstart
-    print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
+    if myrank==0:
+        print " "
+        print "iteration ",myiter
+        print "change ", change
+        print "iteration time ",time.time() - tstart
+        print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
+
+if myrank==0:
+    save(savedir+"GM.npy", G)
+    save(savedir+"Sigma.npy", Sigma)    
+    print "total run time ", time.time() - tstart
+
+
+# copy input file into the savedir
+
+
+# do this processing in post
+'''
+print 'now making and saving Gk'
     
-    save("data_forward/GM.npy", G)
-    Gloc =  sum(G, axis=(0,1))[:,0,0]
-    save("data_forward/Gloc.npy", Gloc)
-    save("data_forward/Sigma.npy", Sigma)    
+def plotME_k(folder_ME, k_index):
+    [Nk,Nw,beta,g,omega,q0,sc] = load(folder_ME+"params.npy")
+    taus = linspace(0, beta)
 
+    print Nk
+    print Nw
+    print beta
+    print g
+    print omega
+    
+    Nw = int(Nw)
+    Nk = int(Nk)
+    iw_fermi = zeros(Nw, dtype=complex)
+    Nw2 = int(Nw/2.)
+    for n in range(Nw):
+        iw_fermi[n] = 1j*(2.*(n - Nw2) + 1.)*pi/beta
+    ws = imag(iw_fermi)
+
+    Ntau = 50
+    taus = linspace(0.042,beta-0.042,Ntau)
+    
+    N_selected_k = len(k_index)
+    Gtau = zeros([Ntau, N_selected_k], dtype=complex)
+    G = load(folder_ME+"GM.npy")
+
+    print 'G shape ',shape(G)
+    
+    iky = Nk/2
+    ikxs = k_index
+
+    for ik in range(N_selected_k):
+        for itau in range(Ntau):
+            for iw in range(len(iw_fermi)):
+                Gtau[itau, ik] += 1./beta * exp(-1j*taus[itau]*imag(iw_fermi[iw])) * G[ikxs[ik],iky,iw,0,0]                
+                #plot(taus,-Gtau)
+
+    return taus,Gtau
+
+if myrank==0:
+    #k_index = [0,10,20,30,40]
+
+    k_index = []
+    for i in range(5):
+        k_index.append(i*Nk/8)
+    print "k_index = ", k_index
         
-print "total run time ", time.time() - tstart
-        
+    taus,Gtau = plotME_k("data_forward/", k_index)
+
+    print "saving new Gtau"
+    save("data_forward/taus.npy", taus)
+    save("data_forward/Gtau.npy", Gtau)
+'''

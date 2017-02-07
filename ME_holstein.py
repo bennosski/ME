@@ -60,7 +60,7 @@ if not os.path.exists(savedir):
 #beta  = 2.4
 #omega = 0.6
 
-g     = g_dqmc * 8. * 1./ sqrt(2. * omega)
+g     = g_dqmc * Nk * 1./ sqrt(2. * omega)
 #superconductivity = False
 
 print ' g_dqmc ',g_dqmc

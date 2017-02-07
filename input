@@ -1,0 +1,7 @@
+0.012  # g_dqmc
+8     # Nk
+200    # Nw
+2.4    # beta
+0.1    # omega
+0      # superconductivity
+12345678.9   # q0

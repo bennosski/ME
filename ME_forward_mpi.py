@@ -5,6 +5,11 @@ Created on Thu Dec 08 01:44:04 2016
 @author: Ben
 """
 
+import subprocess
+def bash_command(cmd):
+    subprocess.Popen(['/bin/bash', '-c', cmd])
+
+
 from numpy import *
 from init_functions import *
 from Functions import *
@@ -12,10 +17,10 @@ import time
 import subprocess
 
 from mpi4py import MPI
-
 comm = MPI.COMM_WORLD
 nprocs = comm.size
 myrank = comm.rank
+#myrank = 0
 
 ###Nk must be odd or else the momentum points do not 
 ###form a group under addition!
@@ -26,25 +31,45 @@ myrank = comm.rank
 
 # g_ME = g_dqmc * sqrt(N_total_DQMC) / sqrt(2 omega)
 
+#bash_command('source setup.sh')
 
 tstart = time.time()
 
-g_dqmc = 0.4
+def parse_line(f):
+    line = f.readline()
+    index = line.index('#')
+    if '.' in line:
+        return float(line[:index])
+    else:
+        return int(float(line[:index]))
+    
+with open(sys.argv[1],'r') as f:
+    g_dqmc = parse_line(f)
+    Nk     = parse_line(f)
+    Nw     = parse_line(f)
+    beta   = parse_line(f)
+    omega  = parse_line(f)
+    superconductivity = parse_line(f)
+    q0     = parse_line(f)
+f.close()
 
-Nk    = 40
-Nw    = 200
-beta  = 2.4
-omega = 1.2
+#savedir = sys.argv[2]
+import os
+savedir = 'q%1.1f'%q0+'_omega%1.1f'%omega+'_g%1.3f'%g_dqmc+'/'
+if not os.path.exists(savedir):
+    os.makedirs(savedir)
 
-g = g_dqmc * 8 / sqrt(2. * omega)
+g     = g_dqmc * Nk * 1./ sqrt(2. * omega)
 
-q0 = 12345678.9
-#q0 = 0.2
-superconductivity = False
+print ' g_dqmc ',g_dqmc
+print ' Nk     ',Nk
+print ' Nw     ',Nw
+print ' beta   ',beta
+print ' omega  ',omega
+print ' superconductivty ',superconductivity
+print ' q0     ',q0
 
-save("data_forward/params",asarray([Nk,Nw,beta,g,omega,q0,superconductivity]))
-
-#assert 1==0
+q0 = 2*pi*q0
 
 iter_selfconsistency = 30
 
@@ -121,15 +146,22 @@ for myiter in range(iter_selfconsistency):
         print "change ", change
         print "iteration time ",time.time() - tstart
         print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
-    
-        save("data_forward/GM.npy", G)
-        save("data_forward/Gloc.npy", sum(G, axis=(0,1))[:,0,0])
-        save("data_forward/Sigma.npy", Sigma)    
 
-        
 if myrank==0:
+    save("data_forward/GM.npy", G)
+    save("data_forward/Gloc.npy", sum(G, axis=(0,1))[:,0,0])
+    save("data_forward/Sigma.npy", Sigma)    
     print "total run time ", time.time() - tstart
 
+
+# copy input file into the savedir
+
+if myrank==0:
+    bash_command('cp '+sys.argv[1]+' '+savedir)
+
+# do this processing in post
+'''
+print 'now making and saving Gk'
     
 def plotME_k(folder_ME, k_index):
     [Nk,Nw,beta,g,omega,q0,sc] = load(folder_ME+"params.npy")
@@ -182,3 +214,4 @@ if myrank==0:
     print "saving new Gtau"
     save("data_forward/taus.npy", taus)
     save("data_forward/Gtau.npy", Gtau)
+'''
