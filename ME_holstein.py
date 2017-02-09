@@ -33,11 +33,11 @@ tstart = time.time()
 
 def parse_line(f):
     line = f.readline()
-    index = line.index('#')
+    index = line.index('#')+1
     if '.' in line:
-        return float(line[:index])
+        return float(line[index:])
     else:
-        return int(float(line[:index]))
+        return int(float(line[index:]))
     
 with open(sys.argv[1],'r') as f:
     g_dqmc = parse_line(f)
@@ -45,6 +45,7 @@ with open(sys.argv[1],'r') as f:
     Nw     = parse_line(f)
     beta   = parse_line(f)
     omega  = parse_line(f)
+    mu     = parse_line(f)
     superconductivity = parse_line(f)
 f.close()
 
@@ -79,7 +80,7 @@ iter_selfconsistency = 30
 kxs, kys  = init_momenta(Nk)
 iw_bose   = init_boson_freq(Nw, beta)
 iw_fermi  = init_fermion_freq(Nw, beta)
-band      = init_band(kxs, kys, Nk)
+band      = init_band(kxs, kys, Nk, mu)
 D         = init_D(Nw, beta, omega, iw_bose)
 
 #now do the same calculation but with the FFT

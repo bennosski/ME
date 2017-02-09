@@ -1,7 +1,8 @@
-0.012  # g_dqmc
-8     # Nk
-200    # Nw
-2.4    # beta
-0.1    # omega
-0      # superconductivity
-12345678.9   # q0
+g_dqmc  #  0.176776695296637   
+Nk      #  8
+Nw      #  200
+beta    #  5.0
+omega   #  1.0
+sc      #  0
+mu      #  -0.6
+q0      #  12345678.9

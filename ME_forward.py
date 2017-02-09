@@ -36,11 +36,11 @@ tstart = time.time()
 
 def parse_line(f):
     line = f.readline()
-    index = line.index('#')
+    index = line.index('#')+1
     if '.' in line:
-        return float(line[:index])
+        return float(line[index:])
     else:
-        return int(float(line[:index]))
+        return int(float(line[index:]))
     
 with open(sys.argv[1],'r') as f:
     g_dqmc = parse_line(f)
@@ -49,12 +49,19 @@ with open(sys.argv[1],'r') as f:
     beta   = parse_line(f)
     omega  = parse_line(f)
     superconductivity = parse_line(f)
+    mu = parse_line(f)
     q0     = parse_line(f)
 f.close()
 
 #savedir = sys.argv[2]
 import os
-savedir = 'data_2_6_17_small_cluster/q%1.1f'%q0+'_omega%1.1f'%omega+'_g%1.3f'%g_dqmc+'/'
+from datetime import date
+today = date.today()
+yr = today.timetuple()[0]
+mn = today.timetuple()[1]
+dy = today.timetuple()[2]
+savedir = 'data_%d'%mn+'_%d'%dy+'_%d'%yr+'/q%1.1f'%q0+'_omega%1.1f'%omega+'_g%1.3f'%g_dqmc+'/'
+print 'savedir = ',savedir
 if not os.path.exists(savedir):
     os.makedirs(savedir)
 
@@ -69,6 +76,7 @@ print ' Nw     ',Nw
 print ' beta   ',beta
 print ' omega  ',omega
 print ' superconductivty ',superconductivity
+print ' mu     ',mu
 print ' q0     ',q0
 
 q0    = 2*pi*q0
@@ -79,7 +87,7 @@ kxs, kys  = init_momenta(Nk)
 gofq      = init_gofq(kxs, kys, Nk, g, q0)
 iw_bose   = init_boson_freq(Nw, beta)
 iw_fermi  = init_fermion_freq(Nw, beta)
-band      = init_band(kxs, kys, Nk)
+band      = init_band(kxs, kys, Nk, mu)
 D         = init_D(Nw, beta, omega, iw_bose)
 
 #now do the same calculation but with the FFT
@@ -143,19 +151,20 @@ for myiter in range(iter_selfconsistency):
     #comm.Allreduce(Sigma_proc, Sigma, op=MPI.SUM)
     
     change += sum(abs(Sigma-Sigma_old), axis=(0,1,2))/Nk**2
-
+    dens = abs(1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta)
+    
     if myrank==0:
         print " "
         print "iteration ",myiter
         print "change ", change
         print "iteration time ",time.time() - tstart
-        print "filling : ", 1.0 + 2.0*sum(G[:,:,:,0,0], axis=(0,1,2))/Nk**2/beta
+        print "filling : ", dens
 
 if myrank==0:
     save(savedir+"GM.npy", G)
     save(savedir+"Sigma.npy", Sigma)    
+    savetxt(savedir+"dens",[dens])
     print "total run time ", time.time() - tstart
-
 
 # copy input file into the savedir
 

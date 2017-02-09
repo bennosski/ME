@@ -11,13 +11,13 @@ tau0 = array([[1.0,0.0],[0.0,1.0]])
 tau1 = array([[0.0,1.0],[1.0,0.0]])
 tau3 = array([[1.0,0.0],[0.0,-1.0]])
 
-def Ek(kx, ky):
+def Ek(kx, ky, mu):
     #return 0.0
     
     #bandstructure for FeSe monolayer band
     #return -2.0*1.0*(cos(kx) + cos(ky)) - (-3.6)
 
-    return -2.0*1.0*(cos(kx) + cos(ky))
+    return -2.0*1.0*(cos(kx) + cos(ky)) - mu
 
 
 def init_Sigma(Nk,Nw,superconductivity):
@@ -76,11 +76,11 @@ def init_gofq(kxs, kys, Nk, g, q0):
             gofq[ik1,ik2] = g * exp(-sqrt(kx**2 + ky**2)/q0) 
     return gofq
 
-def init_band(kxs, kys, Nk):
+def init_band(kxs, kys, Nk, mu):
     band = zeros([Nk,Nk])
     for ik1 in range(Nk):
         for ik2 in range(Nk):
-            band[ik1,ik2] = Ek(kxs[ik1], kys[ik2])
+            band[ik1,ik2] = Ek(kxs[ik1], kys[ik2], mu)
     return band
 
 def init_nF(ws, omega):

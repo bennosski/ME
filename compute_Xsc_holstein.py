@@ -9,7 +9,7 @@ t0 = time.time()
 
 folder = sys.argv[1]
 Sigma = load(folder+'Sigma.npy')
-#the momentum independent part if this Sigma was calculated using the forward scattering code:
+#the momentum independent Self-energy if this Sigma was calculated using the forward scattering code:
 Sigma = Sigma[0,0,:,0,0]
 
 files = os.listdir(folder)
@@ -20,11 +20,11 @@ for myfile in files:
         
 def parse_line(f):
     line = f.readline()
-    index = line.index('#')
+    index = line.index('#')+1
     if '.' in line:
-        return float(line[:index])
+        return float(line[index:])
     else:
-        return int(float(line[:index]))
+        return int(float(line[index:]))
     
 with open(inputfile,'r') as f:
     g_dqmc = parse_line(f)
@@ -33,6 +33,7 @@ with open(inputfile,'r') as f:
     beta   = parse_line(f)
     omega  = parse_line(f)
     superconductivity = parse_line(f)
+    mu     = parse_line(f)
     q0     = parse_line(f)
 f.close()
 
@@ -45,79 +46,80 @@ print ' beta   ',beta
 print ' omega  ',omega
 print ' superconductivty ',superconductivity
 print ' q0     ',q0
+print ' mu     ',mu
 
 q0    = 2*pi*q0
 
+Nws = [30,20]
 
-Nw = 40
+for Nw in Nws:
 
-kxs, kys = init_momenta(Nk)
-band     = init_band(kxs, kys, Nk)
-iwn       = init_fermion_freq(Nw, beta)
-wn = imag(iwn)
+     kxs, kys = init_momenta(Nk)
+     band     = init_band(kxs, kys, Nk, mu)
+     iwn      = init_fermion_freq(Nw, beta)
+     wn = imag(iwn)
 
-Z = 1.0 - Sigma[100-Nw/2:100+Nw/2]/iwn
+     Z = 1.0 - Sigma[100-Nw/2:100+Nw/2]/iwn
 
-x0 = 0.
-for ik1 in range(Nk):
-    for ik2 in range(Nk):
-        for n in range(Nw):
-            x0 += 1./(beta*Nk**2) * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)
+     x0 = 0.
+     for ik1 in range(Nk):
+         for ik2 in range(Nk):
+             for n in range(Nw):
+                 x0 += 1./(beta*Nk**2) * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)
 
-print 'done with x0 \n'
-
-
-g2D = zeros([Nw,Nw], dtype=complex)
-for n1 in range(Nw):
-    for n2 in range(Nw):
-        g2D[n1,n2] = -2.*g**2*omega / ((wn[n1]-wn[n2])**2+omega**2)
-
-t = g2D.copy()
-change = 1.0
-
-iter_selfconsistency = 20
-for myiter in range(iter_selfconsistency):
-    if change < 1e-4:
-        break
-
-    print 'iter ',myiter
-    
-    tnew = zeros([Nw,Nw], dtype=complex)
-
-    for ik1 in range(Nk):
-        for ik2 in range(Nk):
-            for n in range(Nw):
-                for np in range(Nw):
-                    for npp in range(Nw):
-                        tnew[np,n] -= 1./(beta*Nk**2)*1./(Z[npp]**2*wn[npp]**2 + band[ik1,ik2]**2)*g2D[npp,np] * t[npp,n]
-                        
-    tnew += g2D 
-    change = sum(abs(tnew-t))/Nw**2
-    print ' '
-    print change
-    t = tnew.copy()
-
-    print '\ntime elapsed ',time.time()-t0
+     print 'done with x0 \n'
 
 
-save(folder,'t')
+     g2D = zeros([Nw,Nw], dtype=complex)
+     for n1 in range(Nw):
+         for n2 in range(Nw):
+             g2D[n1,n2] = -2.*g**2*omega / ((wn[n1]-wn[n2])**2+omega**2)
 
+     t = g2D.copy()
+     change = 1.0
 
-x = 0.
-for ik1 in range(Nk):
-    for ik2 in range(Nk):
-        for ip1 in range(Nk):
-            for ip2 in range(Nk):
-                for n in range(Nw):
-                    for np in range(Nw):
-                        x -= 1./(beta*Nk**2)**2 * 1./(Z[np]**2*wn[np]**2 + band[ip1,ip2]**2) * t[np, n] * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)  
+     iter_selfconsistency = 20
+     for myiter in range(iter_selfconsistency):
+         if change < 1e-4:
+             break
 
-x += x0
+         print 'iter ',myiter
 
-print '---------------------'
-print 'Xsc = ', x
-print '---------------------'
+         tnew = zeros([Nw,Nw], dtype=complex)
 
-print 'time elapsed ',time.time()-t0
+         for ik1 in range(Nk):
+             for ik2 in range(Nk):
+                 for n in range(Nw):
+                     for np in range(Nw):
+                         for npp in range(Nw):
+                             tnew[np,n] -= 1./(beta*Nk**2)*1./(Z[npp]**2*wn[npp]**2 + band[ik1,ik2]**2)*g2D[npp,np] * t[npp,n]
 
+         tnew += g2D 
+         change = sum(abs(tnew-t))/Nw**2
+         print ' '
+         print change
+         t = tnew.copy()
+
+         print '\ntime elapsed ',time.time()-t0
+
+     save(folder,'t')
+
+     x = 0.
+     for ik1 in range(Nk):
+         for ik2 in range(Nk):
+             for ip1 in range(Nk):
+                 for ip2 in range(Nk):
+                     for n in range(Nw):
+                         for np in range(Nw):
+                             x -= 1./(beta*Nk**2)**2 * 1./(Z[np]**2*wn[np]**2 + band[ip1,ip2]**2) * t[np, n] * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)  
+
+     x += x0
+
+     print '---------------------'
+     print 'Xsc = ', x
+     print '---------------------'
+
+     print 'total time elapsed ',time.time()-t0
+
+     savetxt(folder+'xsc_Nw%d'%Nw, [x])
     
