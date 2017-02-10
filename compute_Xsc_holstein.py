@@ -26,7 +26,7 @@ def parse_line(f):
     else:
         return int(float(line[index:]))
     
-with open(inputfile,'r') as f:
+with open(folder+inputfile,'r') as f:
     g_dqmc = parse_line(f)
     Nk     = parse_line(f)
     Nw     = parse_line(f)
@@ -48,9 +48,11 @@ print ' superconductivty ',superconductivity
 print ' q0     ',q0
 print ' mu     ',mu
 
+
 q0    = 2*pi*q0
 
-Nws = [30,20]
+NwOriginal = Nw
+Nws = [20,30,40,50]
 
 for Nw in Nws:
 
@@ -59,7 +61,8 @@ for Nw in Nws:
      iwn      = init_fermion_freq(Nw, beta)
      wn = imag(iwn)
 
-     Z = 1.0 - Sigma[100-Nw/2:100+Nw/2]/iwn
+     mid = NwOriginal/2
+     Z = 1.0 - Sigma[mid-Nw/2:mid+Nw/2]/iwn
 
      x0 = 0.
      for ik1 in range(Nk):
@@ -121,5 +124,5 @@ for Nw in Nws:
 
      print 'total time elapsed ',time.time()-t0
 
-     savetxt(folder+'xsc_Nw%d'%Nw, [x])
+     savetxt(folder+'xsc_Nw%d'%Nw, [real(x)])
     

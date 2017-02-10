@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=ME
-#SBATCH --time=00:05:00
+#SBATCH --time=00:35:00
 #SBATCH --constraint="2.60GHz"
 #SBATCH --partition=iric
 #SBATCH --qos=iric
@@ -13,5 +13,5 @@ ml python/2.7.5
 
 echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
 echo "^^^^^^^start: `date`"
-srun --ntasks=1 --cpus-per-task=1 python ME_holstein.py input_holstein
+srun --ntasks=1 --cpus-per-task=1 python ME_forward.py $1
 echo "^^^^^^^end: `date`"
