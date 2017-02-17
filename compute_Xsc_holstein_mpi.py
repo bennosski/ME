@@ -5,6 +5,11 @@ import os
 import time
 from init_functions import *
 
+from mpi4py import MPI
+comm = MPI.COMM_WORLD
+nprocs = comm.size
+myrank = comm.rank
+
 t0 = time.time()
 
 folder = sys.argv[1]
@@ -39,21 +44,20 @@ f.close()
 
 g     = g_dqmc * Nk * 1./ sqrt(2. * omega)
 
-print ' g_dqmc ',g_dqmc
-print ' Nk     ',Nk
-print ' Nw     ',Nw
-print ' beta   ',beta
-print ' omega  ',omega
-print ' superconductivty ',superconductivity
-print ' q0     ',q0
-print ' mu     ',mu
-
+if myrank==0:
+    print ' g_dqmc ',g_dqmc
+    print ' Nk     ',Nk
+    print ' Nw     ',Nw
+    print ' beta   ',beta
+    print ' omega  ',omega
+    print ' superconductivty ',superconductivity
+    print ' q0     ',q0
+    print ' mu     ',mu
 
 q0    = 2*pi*q0
 
 NwOriginal = Nw
-#Nws = [20,30,40,50]
-Nws = [24]
+Nws = [20,30,40,50]
 
 for Nw in Nws:
 
@@ -71,8 +75,8 @@ for Nw in Nws:
              for n in range(Nw):
                  x0 += 1./(beta*Nk**2) * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)
 
-     print 'done with x0 \n'
-
+     if myrank==0:
+         print 'done with x0 \n'
 
      g2D = zeros([Nw,Nw], dtype=complex)
      for n1 in range(Nw):
@@ -87,43 +91,58 @@ for Nw in Nws:
          if change < 1e-4:
              break
 
-         print 'iter ',myiter
+         if myrank==0:
+             print 'iter ',myiter
 
          tnew = zeros([Nw,Nw], dtype=complex)
-
+         tnew_proc = zeros([Nw,Nw], dtype=complex)
+         
          for ik1 in range(Nk):
              for ik2 in range(Nk):
-                 for n in range(Nw):
-                     for np in range(Nw):
-                         for npp in range(Nw):
-                             tnew[np,n] -= 1./(beta*Nk**2)*1./(Z[npp]**2*wn[npp]**2 + band[ik1,ik2]**2)*g2D[npp,np] * t[npp,n]
-
-         tnew += g2D 
-         change = sum(abs(tnew-t))/Nw**2
-         print ' '
-         print change
-         t = tnew.copy()
-
-         print '\ntime elapsed ',time.time()-t0
-
-     save(folder,'t')
-
-     x = 0.
-     for ik1 in range(Nk):
-         for ik2 in range(Nk):
-             for ip1 in range(Nk):
-                 for ip2 in range(Nk):
+                 if (ik1+ik2*Nk)%nprocs == myrank:
                      for n in range(Nw):
                          for np in range(Nw):
-                             x -= 1./(beta*Nk**2)**2 * 1./(Z[np]**2*wn[np]**2 + band[ip1,ip2]**2) * t[np, n] * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)  
+                             for npp in range(Nw):
+                                 tnew_proc[np,n] -= 1./(beta*Nk**2)*1./(Z[npp]**2*wn[npp]**2 + band[ik1,ik2]**2)*g2D[npp,np] * t[npp,n]
 
+         comm.Allreduce(tnew_proc, tnew, op=MPI.SUM)
+                                 
+         tnew += g2D 
+         change = sum(abs(tnew-t))/Nw**2
+         if myrank==0:
+             print ' '
+             print change
+         t = tnew.copy()
+
+         if myrank==0:
+             print '\ntime elapsed ',time.time()-t0
+
+     #save(folder,'t')
+
+     if myrank==0:
+         print 'computing xsc'
+
+     x = asarray(0.)
+     x_proc = asarray(0.)
+     for ik1 in range(Nk):
+         for ik2 in range(Nk):
+             if (ik1 + ik2*Nk)%nprocs==0:
+                 for ip1 in range(Nk):
+                     for ip2 in range(Nk):
+                         for n in range(Nw):
+                             for np in range(Nw):
+                                 x_proc -= 1./(beta*Nk**2)**2 * 1./(Z[np]**2*wn[np]**2 + band[ip1,ip2]**2) * t[np, n] * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)  
+
+     comm.Allreduce(x_proc, x, op=MPI.SUM)
+                                 
      x += x0
 
-     print '---------------------'
-     print 'Xsc = ', x
-     print '---------------------'
+     if myrank==0:
+         print '---------------------'
+         print 'Xsc = ', x
+         print '---------------------'
 
-     print 'total time elapsed ',time.time()-t0
+         print 'total time elapsed ',time.time()-t0
 
-     savetxt(folder+'xsc_Nw%d'%Nw, [real(x)])
+         savetxt(folder+'xsc_Nw%d'%Nw, [real(x)])
     

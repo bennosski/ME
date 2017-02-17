@@ -60,7 +60,7 @@ today = date.today()
 yr = today.timetuple()[0]
 mn = today.timetuple()[1]
 dy = today.timetuple()[2]
-savedir = 'data_%d'%mn+'_%d'%dy+'_%d'%yr+'/q%1.1f'%q0+'_omega%1.1f'%omega+'_g%1.3f'%g_dqmc+'_mu%1.3f'%abs(mu)+'_Nw%d'%Nw+'_Nk%d'%Nk + '_beta%1.1f'%beta+'/'
+savedir = 'data_%d'%mn+'_%d'%dy+'_%d'%yr+'/fig2/q%1.1f'%q0+'_omega%1.1f'%omega+'_g%1.3f'%g_dqmc+'_mu%1.3f'%abs(mu)+'_Nw%d'%Nw+'_Nk%d'%Nk + '_beta%1.1f'%beta+'/'
 print 'savedir = ',savedir
 if not os.path.exists(savedir):
     os.makedirs(savedir)
