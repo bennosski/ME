@@ -16,6 +16,19 @@ def subtract_freqs(n,m,Nw):
     
 def inv2b2(M):
     out = zeros([2,2],dtype=complex)
+
+
+#performs p-k to get q
+def subtract_momenta(ipx,ipy,ikx,iky, Nk):
+    m = Nk/2
+
+    iqx = (ipx-m) - (ikx-m)
+    iqx = iqx%Nk
+
+    iqy = (ipy-m) - (iky-m)
+    iqy = iqy%Nk
+
+    return iqx,iqy
     
     
     

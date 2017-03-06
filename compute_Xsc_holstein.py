@@ -52,8 +52,8 @@ print ' mu     ',mu
 q0    = 2*pi*q0
 
 NwOriginal = Nw
-#Nws = [20,30,40,50]
-Nws = [24]
+Nws = [20,30,40,50]
+#Nws = [24]
 
 for Nw in Nws:
 

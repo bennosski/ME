@@ -78,65 +78,68 @@ for Nw in Nws:
      if myrank==0:
          print 'done with x0 \n'
 
-     g2D = zeros([Nw,Nw], dtype=complex)
-     for n1 in range(Nw):
-         for n2 in range(Nw):
-             g2D[n1,n2] = -2.*g**2*omega / ((wn[n1]-wn[n2])**2+omega**2)
+     if abs(g) > 1e-10:  # g is nonzero         
+         g2D = zeros([Nw,Nw], dtype=complex)
+         for n1 in range(Nw):
+             for n2 in range(Nw):
+                 g2D[n1,n2] = -2.*g**2*omega / ((wn[n1]-wn[n2])**2+omega**2)
 
-     t = g2D.copy()
-     change = 1.0
+         t = g2D.copy()
+         change = 1.0
 
-     iter_selfconsistency = 20
-     for myiter in range(iter_selfconsistency):
-         if change < 1e-4:
-             break
+         iter_selfconsistency = 20
+         for myiter in range(iter_selfconsistency):
+             if change < 1e-4:
+                 break
 
-         if myrank==0:
-             print 'iter ',myiter
+             if myrank==0:
+                 print 'iter ',myiter
 
-         tnew = zeros([Nw,Nw], dtype=complex)
-         tnew_proc = zeros([Nw,Nw], dtype=complex)
-         
-         for ik1 in range(Nk):
-             for ik2 in range(Nk):
-                 if (ik1+ik2*Nk)%nprocs == myrank:
-                     for n in range(Nw):
-                         for np in range(Nw):
-                             for npp in range(Nw):
-                                 tnew_proc[np,n] -= 1./(beta*Nk**2)*1./(Z[npp]**2*wn[npp]**2 + band[ik1,ik2]**2)*g2D[npp,np] * t[npp,n]
+             tnew = zeros([Nw,Nw], dtype=complex)
+             tnew_proc = zeros([Nw,Nw], dtype=complex)
 
-         comm.Allreduce(tnew_proc, tnew, op=MPI.SUM)
-                                 
-         tnew += g2D 
-         change = sum(abs(tnew-t))/Nw**2
-         if myrank==0:
-             print ' '
-             print change
-         t = tnew.copy()
-
-         if myrank==0:
-             print '\ntime elapsed ',time.time()-t0
-
-     #save(folder,'t')
-
-     if myrank==0:
-         print 'computing xsc'
-
-     x = asarray(0.)
-     x_proc = asarray(0.)
-     for ik1 in range(Nk):
-         for ik2 in range(Nk):
-             if (ik1 + ik2*Nk)%nprocs==0:
-                 for ip1 in range(Nk):
-                     for ip2 in range(Nk):
+             for ik1 in range(Nk):
+                 for ik2 in range(Nk):
+                     if (ik1+ik2*Nk)%nprocs == myrank:
                          for n in range(Nw):
                              for np in range(Nw):
-                                 x_proc -= 1./(beta*Nk**2)**2 * 1./(Z[np]**2*wn[np]**2 + band[ip1,ip2]**2) * t[np, n] * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)  
+                                 for npp in range(Nw):
+                                     tnew_proc[np,n] -= 1./(beta*Nk**2)*1./(Z[npp]**2*wn[npp]**2 + band[ik1,ik2]**2)*g2D[npp,np] * t[npp,n]
 
-     comm.Allreduce(x_proc, x, op=MPI.SUM)
-                                 
-     x += x0
+             comm.Allreduce(tnew_proc, tnew, op=MPI.SUM)
 
+             tnew += g2D 
+             change = sum(abs(tnew-t))/Nw**2
+             if myrank==0:
+                 print ' '
+                 print change
+             t = tnew.copy()
+
+             if myrank==0:
+                 print '\ntime elapsed ',time.time()-t0
+
+         #save(folder,'t')
+
+         if myrank==0:
+             print 'computing xsc'
+
+         x = asarray(0., dtype=complex)
+         x_proc = asarray(0., dtype=complex)
+         for ik1 in range(Nk):
+             for ik2 in range(Nk):
+                 if (ik1 + ik2*Nk)%nprocs==0:
+                     for ip1 in range(Nk):
+                         for ip2 in range(Nk):
+                             for n in range(Nw):
+                                 for np in range(Nw):
+                                     x_proc -= 1./(beta*Nk**2)**2 * 1./(Z[np]**2*wn[np]**2 + band[ip1,ip2]**2) * t[np, n] * 1./(Z[n]**2*wn[n]**2 + band[ik1,ik2]**2)  
+
+         comm.Allreduce(x_proc, x, op=MPI.SUM)
+
+         x += x0
+     else: # only the bare part
+         x = x0
+         
      if myrank==0:
          print '---------------------'
          print 'Xsc = ', x

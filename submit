@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=ME
-#SBATCH --time=00:35:00
+#SBATCH --time=00:10:00
 #SBATCH --constraint="2.60GHz"
 #SBATCH --partition=iric
 #SBATCH --qos=iric
