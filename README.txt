@@ -12,8 +12,8 @@ Marsiglio_holstein.py :::: uses output of ME_holstein_mpi.py in /data_holstein f
 THESE ARE CHECKED
 
 ME_forward.py            ::: solves imaginary frequency forward scattering problem
-ME_forward_mpi.py       ::: uses MPI. Is the latestest used verions
-Marsiglio_forward.py  ::: uses output of ME1_mpi.py in /data folder and does Marsiglio iterations
+ME_forward_mpi.py        ::: uses MPI. Is the latestest used verions
+Marsiglio_forward.py     ::: uses output of ME1_mpi.py in /data folder and does Marsiglio iterations
 
 
 
